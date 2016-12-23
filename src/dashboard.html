@@ -1,0 +1,42 @@
+<template>
+    <require from="./repeat-helpers"></require>
+
+  <section class="au-animate">
+    <h2>${heading}</h2>
+
+      <h3>Uw tickets in behandeling</h3>
+      <table class="table table-striped">
+            <tr repeat.for="ticket of tickets" style.bind="ticket.isSelected ? 'background: red' : 'background: white'" click.delegate="highlightRow(ticket)">
+                <td>${ticket.description | upper}</td>
+            </tr>
+      </table>
+
+
+      <h3>Alle tickets in behandeling van Het Rughuis</h3>
+
+      <label for="column">Sorteer op status:</label>
+      <select id="column" ref="column">
+          <option value="status">Status</option>
+          <option value="owner">Ingediend door</option>
+      </select>
+
+      <select ref="direction">
+          <option value="descending">Descending</option>
+          <option value="ascending">Ascending</option>
+      </select>
+
+      <table class="table table-striped">
+          <tr>
+              <th>Omschrijving</th>
+              <th>Status</th>
+              <th>Ingediend door</th>
+          </tr>
+          <tr repeat.for="ticket of tickets | sort:column.value:direction.value | take:3" style.bind="ticket.isSelected ? 'background: lightblue' : 'background: white'" click.delegate="highlightRow(ticket)">
+              <td>${ticket.description}</td>
+              <td>${ticket.status}</td>
+              <td>${ticket.owner}</td> 
+          </tr>
+      </table>
+
+  </section>
+</template>
